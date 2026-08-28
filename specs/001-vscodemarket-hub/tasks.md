@@ -52,18 +52,18 @@
 
 ### Tests for User Story 1
 
-- [ ] T015 [P] [US1] Contract test for `POST /api/v1/versions/lookup` in `backend/internal/handlers/version_test.go`(httptest,200/404/400 路径)
-- [ ] T016 [P] [US1] Unit test for version string parser in `backend/internal/upstream/version_test.go`(合法/非法/Insider)
+- [x] T015 [P] [US1] Contract test for `POST /api/v1/versions/lookup` in `backend/internal/handlers/version_test.go`(httptest,200/404/400 路径)
+- [x] T016 [P] [US1] Unit test for version string parser in `backend/internal/upstream/version_test.go`(合法/非法/Insider)
 
 ### Implementation for User Story 1
 
-- [ ] T017 [P] [US1] Implement ClientRelease upstream adapter in `backend/internal/upstream/client.go`(透传 `update.code.visualstudio.com`,返回 ClientRelease)
-- [ ] T018 [P] [US1] Implement ServerRelease upstream adapter in `backend/internal/upstream/server.go`(按 commit hash 拼装 vscode-server 直链)
-- [ ] T019 [US1] Implement `POST /versions/lookup` handler in `backend/internal/handlers/version.go`(depends T017/T018,T015 测试在此绿)
-- [ ] T020 [US1] Create `HomePage.vue` in `frontend/src/pages/HomePage.vue`(表单 Channel/Platform/Architecture + 提交)
-- [ ] T021 [P] [US1] Create `VersionForm.vue` in `frontend/src/components/VersionForm.vue`(三 select + 一 input,emit submit)
-- [ ] T022 [P] [US1] Create `DownloadLinkCard.vue` in `frontend/src/components/DownloadLinkCard.vue`(platform/arch/url/commit hash 显示)
-- [ ] T023 [US1] Wire HomePage 提交 → `http.lookupVersion()` → 双 DownloadLinkCard 渲染(depends T019-T022)
+- [x] T017 [P] [US1] Implement ClientRelease upstream adapter in `backend/internal/upstream/client.go`(透传 `update.code.visualstudio.com`,返回 ClientRelease)
+- [x] T018 [P] [US1] Implement ServerRelease upstream adapter in `backend/internal/upstream/server.go`(按 commit hash 拼装 vscode-server 直链)
+- [x] T019 [US1] Implement `POST /versions/lookup` handler in `backend/internal/handlers/version.go`(depends T017/T018,T015 测试在此绿)
+- [x] T020 [US1] Create `HomePage.vue` in `frontend/src/pages/HomePage.vue`(表单 Channel/Platform/Architecture + 提交)
+- [x] T021 [P] [US1] Create `VersionForm.vue` in `frontend/src/components/VersionForm.vue`(三 select + 一 input,emit submit)
+- [x] T022 [P] [US1] Create `DownloadLinkCard.vue` in `frontend/src/components/DownloadLinkCard.vue`(platform/arch/url/commit hash 显示)
+- [x] T023 [US1] Wire HomePage 提交 → `http.lookupVersion()` → 双 DownloadLinkCard 渲染(depends T019-T022)
 
 **Checkpoint**: US1 可独立验证 — MVP 形态
 

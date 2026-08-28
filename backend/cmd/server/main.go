@@ -2,9 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/yourorg/vscodemarket/internal/handlers"
 )
 
 func main() {
@@ -15,7 +17,12 @@ func main() {
 			w.Header().Set("Content-Type", "application/json")
 			_ = json.NewEncoder(w).Encode(map[string]string{"status": "ok"})
 		})
+		r.Post("/versions/lookup", handlers.VersionLookup)
 	})
 
-	_ = http.ListenAndServe(":8081", r)
+	addr := ":8081"
+	log.Printf("vscodemarket backend listening on %s", addr)
+	if err := http.ListenAndServe(addr, r); err != nil {
+		log.Fatal(err)
+	}
 }
