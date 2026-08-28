@@ -169,15 +169,15 @@
 
 ### Tests for User Story 7
 
-- [ ] T042 [P] [US7] Snapshot test for zh-CN/en-US key set equality in `frontend/src/i18n/i18n.test.ts`
-- [ ] T043 [P] [US7] Static scan test: assert no download-command literals in `frontend/src/**` 在 Playwright E2E 套件中(SC-008)
+- [x] T042 [P] [US7] Snapshot test for zh-CN/en-US key set equality in `frontend/src/i18n/i18n.test.ts`
+- [x] T043 [P] [US7] Static scan test: assert no download-command literals in `frontend/src/**` 在 Playwright E2E 套件中(SC-008)
 
 ### Implementation for User Story 7
 
-- [ ] T044 [P] [US7] Create `DocsBlock.vue` in `frontend/src/components/DocsBlock.vue`(渲染五主题内容,slot per 主题)
-- [ ] T045 [P] [US7] Create `ScriptSnippet.vue` in `frontend/src/components/ScriptSnippet.vue`(只渲染运行/安装命令文本,严禁下载动作字面量)
-- [ ] T046 [US7] Create `Docs.vue` in `frontend/src/pages/Docs.vue`(整合 DocsBlock + ScriptSnippet,语言切换响应)(依赖 T044/T045)
-- [ ] T047 [P] [US7] Populate i18n content for five topics in `frontend/src/i18n/zh-CN.ts` 与 `frontend/src/i18n/en-US.ts`
+- [x] T044 [P] [US7] Create `DocsBlock.vue` in `frontend/src/components/DocsBlock.vue`(渲染五主题内容,slot per 主题)
+- [x] T045 [P] [US7] Create `ScriptSnippet.vue` in `frontend/src/components/ScriptSnippet.vue`(只渲染运行/安装命令文本,严禁下载动作字面量)
+- [x] T046 [US7] Create `Docs.vue` in `frontend/src/pages/Docs.vue`(整合 DocsBlock + ScriptSnippet,语言切换响应)(依赖 T044/T045)
+- [x] T047 [P] [US7] Populate i18n content for five topics in `frontend/src/i18n/zh-CN.ts` 与 `frontend/src/i18n/en-US.ts`
 
 **Checkpoint**: 文档形态独立可演示,无下载动作字面量
 
