@@ -271,10 +271,10 @@
 
 **Purpose**: 跨 Story 收尾
 
-- [ ] T072 [P] Add `LICENSE` file(MIT 或 Apache-2.0,自行选定)
-- [ ] T073 [P] Add `CHANGELOG.md` v0.1.0 条目,引用 M1-M11 验收摘要
-- [ ] T074 [P] Verify no `wget|curl|Invoke-WebRequest|fetch` literals in `frontend/src/**` 与 `backend/internal/**`(SC-008)
-- [ ] T075 Run quickstart.md validation end-to-end against `docker compose up` 实例,记录结果到 `docs/qa-run.md`
+- [x] T072 [P] Add `LICENSE` file(MIT 或 Apache-2.0,自行选定)
+- [x] T073 [P] Add `CHANGELOG.md` v0.1.0 条目,引用 M1-M11 验收摘要
+- [x] T074 [P] Verify no `wget|curl|Invoke-WebRequest|fetch` literals in `frontend/src/**` 与 `backend/internal/**`(SC-008)
+- [x] T075 Run quickstart.md validation end-to-end against `docker compose up` 实例,记录结果到 `docs/qa-run.md`
 
 ---
 
