@@ -2,6 +2,7 @@
 import { ref, onMounted, watch } from 'vue'
 import { http } from '../api/http'
 import { t } from '../i18n'
+import type { Dict } from '../i18n/zh-CN'
 
 type TargetType = 'CLIENT' | 'SERVER' | 'EXTENSION'
 type Window = '24h' | '7d' | '30d'
@@ -38,13 +39,13 @@ async function load() {
 onMounted(load)
 watch(currentWindow, load)
 
-function labelFor(key: keyof typeof t.trending): string {
-  return t.trending[key]
+function labelFor(key: keyof Dict['trending']): string {
+  return t.value.trending[key]
 }
 function windowLabel(w: Window): string {
-  if (w === '24h') return t.trending.window24h
-  if (w === '7d') return t.trending.window7d
-  return t.trending.window30d
+  if (w === '24h') return t.value.trending.window24h
+  if (w === '7d') return t.value.trending.window7d
+  return t.value.trending.window30d
 }
 </script>
 
