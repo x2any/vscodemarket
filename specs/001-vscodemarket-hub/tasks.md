@@ -133,12 +133,12 @@
 
 ### Tests for User Story 5
 
-- [ ] T036 [P] [US5] Unit test that `enginesVscode` field is always present in `backend/internal/upstream/extension_test.go`
+- [x] T036 [P] [US5] Unit test that `enginesVscode` field is always present in `backend/internal/upstream/extension_test.go`
 
 ### Implementation for User Story 5
 
-- [ ] T037 [P] [US5] Create `ExtensionDetail.vue` in `frontend/src/pages/ExtensionDetail.vue`(版本列表 + enginesVscode 徽标)
-- [ ] T038 [US5] Wire `ExtensionDetail.vue` to call versions endpoint, render each version with enginesVscode(依赖 T033/T037)
+- [x] T037 [P] [US5] Create `ExtensionDetail.vue` in `frontend/src/pages/ExtensionDetail.vue`(版本列表 + enginesVscode 徽标)
+- [x] T038 [US5] Wire `ExtensionDetail.vue` to call versions endpoint, render each version with enginesVscode(依赖 T033/T037)
 
 **Checkpoint**: US5 与 US4 共同完成扩展详情体验
 
