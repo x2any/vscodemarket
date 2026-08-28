@@ -40,6 +40,8 @@ echo "==> events accepted (degraded ok)"
 expect "events 202" 202 "$API/events" '{"eventType":"SEARCH","targetType":"CLIENT","targetIdentifier":"1.94.2","platform":"darwin","architecture":"arm64","channel":"stable"}'
 
 echo "==> trending empty/200"
-expect "trending 200" 200 "$API/trending?targetType=CLIENT&window=24h"
+code=$(curl -s -o /dev/null -w "%{http_code}" "$API/trending?targetType=CLIENT&window=24h")
+[[ "$code" == "200" ]] || fail "trending: want 200 got $code"
+echo "PASS trending ($code)"
 
 echo "All smoke tests passed."
