@@ -27,6 +27,9 @@ export const zhCN = {
     noResults: '无匹配扩展',
     engines: '适配 VSCode'
   },
+  versionDetail: {
+    serverUnavailable: '服务端(vscode-server)暂未提供 commit 元数据,无法生成链接'
+  },
   trending: {
     client: '客户端热榜',
     server: '服务端热榜',

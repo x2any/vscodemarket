@@ -29,6 +29,9 @@ export const enUS: Dict = {
     noResults: 'No matching extensions',
     engines: 'Engines.vscode'
   },
+  versionDetail: {
+    serverUnavailable: 'Server (vscode-server) commit metadata unavailable; cannot generate link'
+  },
   trending: {
     client: 'Client trending',
     server: 'Server trending',

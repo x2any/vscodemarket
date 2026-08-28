@@ -16,6 +16,8 @@ type releasesResp struct {
 }
 
 // Releases handles GET /api/v1/releases
+// Accepts channel + page + pageSize only. Platform / architecture are
+// intentionally absent here — version detail lives at /versions/lookup.
 func Releases(w http.ResponseWriter, r *http.Request) {
 	q := r.URL.Query()
 	channel := upstream.Channel(strings.ToLower(q.Get("channel")))
@@ -26,16 +28,9 @@ func Releases(w http.ResponseWriter, r *http.Request) {
 		WriteError(w, http.StatusBadRequest, Err(CodeInvalidRequest, "channel 非法", "invalid channel"))
 		return
 	}
-	platform := q.Get("platform")
-	arch := q.Get("architecture")
-	if platform != "" && arch != "" && !isValidPlatformArch(platform, arch) {
-		WriteError(w, http.StatusBadRequest, Err(CodeInvalidPlatformArch,
-			"平台/架构组合无效", "Invalid platform/architecture combination"))
-		return
-	}
 	page := atoiDefault(q.Get("page"), 1)
-	pageSize := atoiDefault(q.Get("pageSize"), 20)
-	results, total, err := upstream.FetchReleases(r.Context(), channel, platform, arch, page, pageSize)
+	pageSize := atoiDefault(q.Get("pageSize"), 30)
+	results, total, err := upstream.FetchReleases(r.Context(), channel, "", "", page, pageSize)
 	if err != nil {
 		WriteError(w, http.StatusBadGateway, Err(CodeUpstreamFailure, "版本清单上游失败", "releases upstream failure"))
 		return
