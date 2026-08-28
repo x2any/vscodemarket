@@ -1,50 +1,62 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!-- Sync Impact Report
+- Version change: 0.1.0 → 0.2.0
+- Modified principles: [PRINCIPLE_1_NAME]…[PRINCIPLE_5_NAME] → I. 公网应用属性 / II. 官方直链原则 / III. 辅助脚本零网络原则 / IV. 极简立场
+- Added sections: 原则 IV. 极简立场(替代原占位符 [PRINCIPLE_5_NAME])
+- Removed sections: 无
+- Follow-up TODOs: 无
+-->
+# VS Code Market 项目宪法
+
+本项目是面向公网访客的"VS Code 插件市场聚合"站点。下述原则为非协商性治理底线,
+任何代码、文档、依赖、运营决策不得与之冲突。
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. 公网应用属性
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+服务部署在公网,服务对象为任意公网访客(非内网员工)。所有涉及用户数据、行为追踪、
+错误日志的决策必须以 GDPR / 中国个人信息保护法 / CCPA 等公网合规边界为准绳。
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+- 默认**不收集**任何可识别个人身份的数据;若必须记录,须最小化、脱敏、并附留存期限。
+- 任何跨域追踪(第三方分析、广告像素、社交分享追踪参数剥离例外除外)默认拒绝。
+- 错误日志不得包含 IP 原文、UA 原文、查询参数等可回溯到自然人的字段;聚合后落盘。
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### II. 官方直链原则
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+所有下载地址必须是资源方**官方域名**上的链接。后端**不代理、不缓存、不重写**下载
+流量,仅承担"找直链"与"聚合"职责。任何把本站演化为镜像、CDN、下载代理的改动直接驳回。
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+- 后端只返回 302/301 至官方 URL,响应体不得包含字节流。
+- 严禁引入对官方资源的预拉取、预缓存、镜像副本存储或代理转发层。
+- 资源失效时,只更新直链元数据,不做"自托管备份"。
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### III. 辅助脚本零网络原则
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+页面提供的一切"内网部署辅助脚本"必须只含运行/安装命令(例如启动服务、安装扩展、
+解压包),不得包含 `wget` / `curl` / `Invoke-WebRequest` / `fetch` 等任何下载动作。
+用户拷入内网后,脚本的所有行为必须可离线执行。
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+- 脚本中若出现 URL,只能是**注释或占位提示**,禁止作为可执行请求的目标。
+- 所需二进制或扩展必须在脚本**运行前**由用户自行放置到指定路径。
+- CI / 构建脚本亦同此原则:构建产物一旦下载到本地,不得在脚本内重新发起网络拉取。
+
+### IV. 极简立场
+
+对一切"主动防御 / 重型基础设施 / 跨域追踪"默认拒绝。当前**未启用**限频、反作弊、
+验证码、用户系统、独立文档站。任何 PR 试图引入上述能力,必须在 ADR 中给出
+**触发条件与替代方案对比**后由维护者批准方可合入。
+
+- 默认假设访客善意、流量正常;不预先为最坏情况构建基础设施。
+- 引入任何第三方服务、SDK、中间件前,先回答:"去掉它,系统是否仍满足需求?"
+- 文档随仓库 README 一处维护;不另起独立文档站。
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+- 本宪法优先于仓库内一切其它实践、文档、模板与示例。
+- 修订流程:在 PR 中提交宪法变更 → 维护者评审 → 合并即生效;变更须写入本文件顶部的
+  Sync Impact Report,并按语义化版本更新版本号。
+- 版本规则:MAJOR = 原则级移除或语义重定义;MINOR = 新增原则或既有原则的实质性
+  扩展;PATCH = 措辞澄清、笔误修正、非语义性润色。
+- 任何 PR / Code Review 必须核对本宪法;违反任一条原则的改动,在补正前不得合入。
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 0.2.0 | **Ratified**: 2026-08-28 | **Last Amended**: 2026-08-28
