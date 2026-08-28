@@ -119,7 +119,10 @@ func CommitHashForVersion(ctx context.Context, version string) (string, error) {
 }
 
 // IsValidVersion rejects empty / malformed strings before hitting upstream.
-var stableVersionRe = regexp.MustCompile(`^\d+\.\d+\.\d+([\-+\w.]*)$`)
+// Accepts MAJOR.MINOR.PATCH optionally followed by a single pre-release or
+// build tag (e.g. `-insider`, `+20241002`, `-rc.1`); rejects four-segment
+// numbers like 1.94.2.3.
+var stableVersionRe = regexp.MustCompile(`^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.]+)?$`)
 
 func IsValidStableVersion(v string) bool {
 	return stableVersionRe.MatchString(strings.TrimSpace(v))
