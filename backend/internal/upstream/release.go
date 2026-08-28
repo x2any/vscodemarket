@@ -71,14 +71,8 @@ func FetchReleases(ctx context.Context, channel Channel, platform, arch string, 
 		out = append(out, entry)
 	}
 	total := len(out)
-	start := (page - 1) * pageSize
-	if start > total {
-		start = total
-	}
-	end := start + pageSize
-	if end > total {
-		end = total
-	}
+	start := min((page-1)*pageSize, total)
+	end := min(start+pageSize, total)
 	return out[start:end], total, nil
 }
 
