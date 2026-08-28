@@ -1,0 +1,35 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Env
+.env*
+!.env.example
+
+# Backend (Go)
+backend/dist/
+backend/server
+backend/*.exe
+backend/*.test
+backend/*.out
+backend/vendor/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/*.log
+
+# Data (SQLite)
+data/*.db
+data/*.db-journal
+data/*.db-wal
+data/*.db-shm
+
+# Misc
+*.log
+coverage/
+docs/qa-run.md

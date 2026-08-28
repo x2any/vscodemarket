@@ -17,14 +17,14 @@
 
 **Purpose**: M1 骨架 — 仓库骨架 + 后端 Go 模块 + 前端 Vite 初始化 + Docker 占位
 
-- [ ] T001 Create repository structure: `backend/`, `frontend/`, `data/`, `docker-compose.yml` 根级占位
-- [ ] T002 Initialize Go module `github.com/yourorg/vscodemarket` in `backend/go.mod` (Go ≥ 1.22),add chi router 与 GeoIP 依赖
-- [ ] T003 Create backend entry `backend/cmd/server/main.go` 启动 net/http + chi router,挂载 `/api/v1/healthz`
-- [ ] T004 [P] Create backend Dockerfile multi-stage `Dockerfile.backend`(builder → 单二进制 scratch/distroless)
-- [ ] T005 Initialize Vite + Vue 3 + TS strict in `frontend/`(pnpm),集成 Element Plus 按需引入
-- [ ] T006 [P] Create frontend Dockerfile multi-stage `Dockerfile.frontend` + `frontend/nginx.conf`(反代 `/api/` → backend:8081)
-- [ ] T007 Create `docker-compose.yml`:backend(:8081)+ frontend(:8080),`data/` 数据卷挂载到 backend
-- [ ] T008 [P] Create `.gitignore`(忽略 `data/*.db`、`frontend/node_modules`、`backend/dist`、`.env*`)
+- [x] T001 Create repository structure: `backend/`, `frontend/`, `data/`, `docker-compose.yml` 根级占位
+- [x] T002 Initialize Go module `github.com/yourorg/vscodemarket` in `backend/go.mod` (Go ≥ 1.22),add chi router 与 GeoIP 依赖
+- [x] T003 Create backend entry `backend/cmd/server/main.go` 启动 net/http + chi router,挂载 `/api/v1/healthz`
+- [x] T004 [P] Create backend Dockerfile multi-stage `Dockerfile.backend`(builder → 单二进制 scratch/distroless)
+- [x] T005 Initialize Vite + Vue 3 + TS strict in `frontend/`(pnpm),集成 Element Plus 按需引入
+- [x] T006 [P] Create frontend Dockerfile multi-stage `Dockerfile.frontend` + `frontend/nginx.conf`(反代 `/api/` → backend:8081)
+- [x] T007 Create `docker-compose.yml`:backend(:8081)+ frontend(:8080),`data/` 数据卷挂载到 backend
+- [x] T008 [P] Create `.gitignore`(忽略 `data/*.db`、`frontend/node_modules`、`backend/dist`、`.env*`)
 
 ---
 
