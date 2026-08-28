@@ -63,10 +63,26 @@
 - 前端:热榜区块,三物维度各自一个面板;时间维度切换(24h/7d/30d)
 - 验收:埋点 + 模拟访问后,UI 出现 Top 10,切换时间维度数据随之变化
 
-## M10 Docker 部署
+## M10 部署(两条路径并存)
+
+提供两条等价部署路径,任选其一即可启动完整功能:
+
+### 路径 A:Docker 一键部署
 - 后端 multi-stage(单二进制)、前端 multi-stage(nginx)
-- `docker-compose.yml`(含 SQLite 数据卷)
+- `docker-compose.yml`(含 SQLite + GeoIP mmdb 数据卷)
 - 验收:`docker compose up` 一键通,埋点数据持久化在卷内
+
+### 路径 B:本地直接运行(开发与轻量部署)
+- 准备:Go ≥1.22 / Node ≥20 / pnpm / GeoLite2-Country.mmdb
+- 后端:`go run ./cmd/server` 或 `./bin/server`,默认监听 `:8080`,DB 默认 `./data/vscodemarket.db`,mmdb 默认 `./data/GeoLite2-Country.mmdb`
+- 前端:`pnpm dev` 启动 Vite dev server(:5173,代理 `/api` → :8080),或 `pnpm build && pnpm preview` 模拟生产
+- SQLite 与 mmdb 路径可通过环境变量覆盖(`DB_PATH`、`GEOIP_PATH`),便于不同平台用户
+- 验收:`go run` + `pnpm dev` 同时启动,浏览器开 `localhost:5173` 完整可操作,事件入库正常
+
+### 两条路径的等价约束
+- 所有路由、事件、GORM schema、热榜聚合在两条路径下行为完全一致
+- 数据卷(`data/`)是路径 A 与路径 B 的共享契约——文件格式、命名一致,迁移/备份可直接跨路径使用
+- README 须并列写两条路径的启动命令,任一文档路径不能只描述 Docker
 
 ## M11 测试 + 隐私
 - 后端:核心契约单测(版本号解析、UA 推断、扩展搜索透传、热榜聚合、埋点入库)

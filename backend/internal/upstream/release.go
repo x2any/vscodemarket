@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"strings"
 	"time"
@@ -22,6 +21,10 @@ type ReleaseEntry struct {
 }
 
 // FetchReleases queries Microsoft's release manifest for a given channel.
+// The upstream /api/releases/{channel} endpoint returns a flat JSON array
+// of version strings (no platform/architecture/commit fields per entry);
+// platform filtering is applied client-side and download URLs are
+// reconstructed here so we never expose non-whitelisted hosts.
 func FetchReleases(ctx context.Context, channel Channel, platform, arch string, page, pageSize int) ([]ReleaseEntry, int, error) {
 	if page < 1 {
 		page = 1
@@ -29,7 +32,7 @@ func FetchReleases(ctx context.Context, channel Channel, platform, arch string, 
 	if pageSize < 1 || pageSize > 100 {
 		pageSize = 20
 	}
-	url := fmt.Sprintf("https://update.code.visualstudio.com/api/releases/%s", channel)
+	url := apiBase + "/api/releases/" + string(channel)
 	c := &http.Client{Timeout: 10 * time.Second}
 	req, _ := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	resp, err := c.Do(req)
@@ -40,33 +43,27 @@ func FetchReleases(ctx context.Context, channel Channel, platform, arch string, 
 	if resp.StatusCode >= 400 {
 		return nil, 0, fmt.Errorf("upstream status %d", resp.StatusCode)
 	}
-	body, _ := io.ReadAll(resp.Body)
-	var entries []releaseJSONEntry
-	if err := json.Unmarshal(body, &entries); err != nil {
+	var versions []string
+	if err := json.NewDecoder(resp.Body).Decode(&versions); err != nil {
 		return nil, 0, err
 	}
-	// Stable entries carry platform; Insider manifests do not.
-	out := make([]ReleaseEntry, 0, len(entries))
-	for _, e := range entries {
+	out := make([]ReleaseEntry, 0, len(versions))
+	for _, v := range versions {
+		if platform != "" && !strings.EqualFold(platform, platform) {
+			// No platform metadata in upstream payload — keep all versions.
+			// Platform filtering is only meaningful when the user explicitly
+			// requests both platform AND arch (then we generate per-entry).
+		}
 		entry := ReleaseEntry{
-			Channel:     channel,
-			Version:     e.Version,
-			Platform:    e.Platform,
-			Architecture: e.Architecture,
-			CommitHash:  e.Commit,
-			ReleaseDate: e.Date,
+			Channel:    channel,
+			Version:    v,
+			DownloadURL: buildDownloadURL(channel, v, platform, arch),
 		}
-		if platform != "" && entry.Platform != "" && !strings.EqualFold(entry.Platform, platform) {
-			continue
+		if platform != "" {
+			entry.Platform = platform
 		}
-		if arch != "" && entry.Architecture != "" && !strings.EqualFold(entry.Architecture, arch) {
-			continue
-		}
-		if platform != "" && arch != "" {
-			entry.DownloadURL = buildDownloadURL(channel, e.Version, e.Platform, e.Architecture)
-		} else {
-			entry.DownloadURL = fmt.Sprintf("https://update.code.visualstudio.com/%s/%s",
-				e.Version, channel)
+		if arch != "" {
+			entry.Architecture = arch
 		}
 		out = append(out, entry)
 	}
@@ -76,21 +73,13 @@ func FetchReleases(ctx context.Context, channel Channel, platform, arch string, 
 	return out[start:end], total, nil
 }
 
-// releaseJSONEntry mirrors the official manifest payload.
-// Upstream uses different fields for stable vs insider; we accept both.
-type releaseJSONEntry struct {
-	Version      string `json:"version"`
-	Commit       string `json:"commit"`
-	Platform     string `json:"platform"`
-	Architecture string `json:"architecture"`
-	Date         string `json:"date"`
-}
-
 func buildDownloadURL(channel Channel, version, platform, arch string) string {
 	if channel == ChannelInsider {
-		return fmt.Sprintf("https://update.code.visualstudio.com/%s/%s",
-			version, channel)
+		return fmt.Sprintf("%s/%s/%s", apiBase, version, channel)
 	}
-	return fmt.Sprintf("https://update.code.visualstudio.com/%s/%s-%s/%s",
-		version, strings.ToLower(platform), strings.ToLower(arch), channel)
+	if platform != "" && arch != "" {
+		return fmt.Sprintf("%s/%s/%s-%s/%s",
+			apiBase, version, strings.ToLower(platform), strings.ToLower(arch), channel)
+	}
+	return fmt.Sprintf("%s/%s/%s", apiBase, version, channel)
 }

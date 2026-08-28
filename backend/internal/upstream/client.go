@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"regexp"
+	"slices"
 	"strings"
 	"time"
 )
@@ -39,8 +40,7 @@ func newAPIClient() *apiClient {
 
 // FetchStable queries Microsoft's API for a single stable version.
 func FetchStable(ctx context.Context, version, platform, arch string) (*ClientRelease, error) {
-	url := fmt.Sprintf("https://update.code.visualstudio.com/api/version/stable/%s-%s",
-		strings.ToLower(platform), strings.ToLower(arch))
+	url := apiBase + "/api/releases/stable"
 	c := newAPIClient()
 	req, _ := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	resp, err := c.hc.Do(req)
@@ -48,25 +48,18 @@ func FetchStable(ctx context.Context, version, platform, arch string) (*ClientRe
 		return nil, err
 	}
 	defer resp.Body.Close()
-	if resp.StatusCode == 404 {
-		return nil, ErrVersionNotFound
-	}
 	if resp.StatusCode >= 400 {
 		return nil, fmt.Errorf("upstream status %d", resp.StatusCode)
 	}
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
+	var entries []string
+	if err := json.NewDecoder(resp.Body).Decode(&entries); err != nil {
 		return nil, err
 	}
-	// Microsoft returns the version string when found, empty body otherwise.
-	if strings.TrimSpace(string(body)) == "" {
+	if !slices.Contains(entries, version) {
 		return nil, ErrVersionNotFound
 	}
-	if !strings.EqualFold(strings.TrimSpace(string(body)), version) {
-		return nil, ErrVersionNotFound
-	}
-	dl := fmt.Sprintf("https://update.code.visualstudio.com/%s/%s-%s/stable",
-		version, strings.ToLower(platform), strings.ToLower(arch))
+	dl := fmt.Sprintf("%s/%s/%s-%s/stable",
+		apiBase, version, strings.ToLower(platform), strings.ToLower(arch))
 	return &ClientRelease{
 		Channel: ChannelStable, Version: version,
 		Platform: platform, Architecture: arch,
@@ -92,10 +85,16 @@ func LatestStable(ctx context.Context, platform, arch string) (string, error) {
 	return strings.TrimSpace(string(body)), nil
 }
 
-// CommitHashForVersion fetches the commit hash associated with a stable build.
-// Microsoft's release.json endpoint exposes the commit field.
+// CommitHashForVersion looks up the commit hash for a stable version.
+// Microsoft's /api/releases/stable returns only a flat version array;
+// commit hash requires hitting the update endpoint for the specific
+// version, which returns a JSON body containing the commit field.
+//
+// If commit metadata is unavailable upstream we return ("", nil) — the
+// handler treats this as "server URL not published yet" rather than an
+// error (per FR-005 / Edge Cases "Stable commit not yet published").
 func CommitHashForVersion(ctx context.Context, version string) (string, error) {
-	url := "https://update.code.visualstudio.com/api/releases/stable"
+	url := fmt.Sprintf("%s/api/version/stable/%s", apiBase, version)
 	c := newAPIClient()
 	req, _ := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	resp, err := c.hc.Do(req)
@@ -103,19 +102,23 @@ func CommitHashForVersion(ctx context.Context, version string) (string, error) {
 		return "", err
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode == 404 {
+		return "", ErrVersionNotFound
+	}
 	if resp.StatusCode >= 400 {
 		return "", fmt.Errorf("upstream status %d", resp.StatusCode)
 	}
-	var entries []releaseJSONEntry
-	if err := json.NewDecoder(resp.Body).Decode(&entries); err != nil {
-		return "", err
+	body, _ := io.ReadAll(resp.Body)
+	// Body is a JSON-encoded object with a "commit" field, but Microsoft's
+	// update endpoint may return the version string or a structured body.
+	// Best-effort: try parsing as object first.
+	var payload struct {
+		Commit string `json:"commit"`
 	}
-	for _, e := range entries {
-		if e.Version == version && e.Commit != "" {
-			return e.Commit, nil
-		}
+	if err := json.Unmarshal(body, &payload); err == nil && payload.Commit != "" {
+		return payload.Commit, nil
 	}
-	return "", ErrVersionNotFound
+	return "", nil
 }
 
 // IsValidVersion rejects empty / malformed strings before hitting upstream.
@@ -129,3 +132,7 @@ func IsValidStableVersion(v string) bool {
 }
 
 var ErrVersionNotFound = fmt.Errorf("version not found")
+
+// apiBase is the Microsoft update endpoint root. Tests override it via
+// apiBaseFor to point at an httptest server without TLS ceremony.
+var apiBase = "https://update.code.visualstudio.com"
