@@ -233,13 +233,13 @@
 
 ### Tests for User Story 10
 
-- [ ] T061 [P] [US10] Smoke test script in `scripts/smoke.sh`(curl 7 个 quickstart 场景端点,断言 200/202)
+- [x] T061 [P] [US10] Smoke test script in `scripts/smoke.sh`(curl 7 个 quickstart 场景端点,断言 200/202)
 
 ### Implementation for User Story 10
 
-- [ ] T062 [US10] Finalize `Dockerfile.backend` multi-stage(builder → scratch 静态二进制,无 shell)与 `Dockerfile.frontend` multi-stage(node build → nginx)
-- [ ] T063 [P] [US10] Finalize `docker-compose.yml`:`data/` 命名卷,`restart: always`,依赖顺序 backend → frontend,健康检查 `/healthz`
-- [ ] T064 [US10] Document quickstart in `README.md`(Docker run + 7 个 quickstart 场景复制可用)
+- [x] T062 [US10] Finalize `Dockerfile.backend` multi-stage(builder → scratch 静态二进制,无 shell)与 `Dockerfile.frontend` multi-stage(node build → nginx)
+- [x] T063 [P] [US10] Finalize `docker-compose.yml`:`data/` 命名卷,`restart: always`,依赖顺序 backend → frontend,健康检查 `/healthz`
+- [x] T064 [US10] Document quickstart in `README.md`(Docker run + 7 个 quickstart 场景复制可用)
 
 **Checkpoint**: 部署独立可演示
 

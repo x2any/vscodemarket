@@ -3,25 +3,32 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.backend
-    ports:
-      - "8081:8081"
+    image: vscodemarket-backend:dev
+    environment:
+      DB_PATH: /data/vscodemarket.db
+      GEOIP_PATH: /data/GeoLite2-Country.mmdb
     volumes:
       - data:/data
+    expose:
+      - "8081"
     restart: always
     healthcheck:
-      test: ["CMD", "/server", "--healthcheck"]
+      test: ["CMD", "/server"]
       interval: 30s
       timeout: 5s
       retries: 3
+      start_period: 10s
 
   frontend:
     build:
       context: .
       dockerfile: Dockerfile.frontend
+    image: vscodemarket-frontend:dev
     ports:
       - "8080:80"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     restart: always
 
 volumes:
