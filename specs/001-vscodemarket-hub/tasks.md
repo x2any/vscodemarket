@@ -76,12 +76,12 @@
 
 ### Tests for User Story 2
 
-- [ ] T024 [P] [US2] Contract test for insider channel omitting server in `backend/internal/handlers/version_test.go`
+- [x] T024 [P] [US2] Contract test for insider channel omitting server in `backend/internal/handlers/version_test.go`
 
 ### Implementation for User Story 2
 
-- [ ] T025 [US2] Extend `version.go` handler for insider branch(FR-005 不渲染 server)(依赖 T019)
-- [ ] T026 [US2] Update `HomePage.vue` to conditionally render server card based on channel(依赖 T023)
+- [x] T025 [US2] Extend `version.go` handler for insider branch(FR-005 不渲染 server)(依赖 T019)
+- [x] T026 [US2] Update `HomePage.vue` to conditionally render server card based on channel(依赖 T023)
 
 **Checkpoint**: US1 + US2 可独立验证,insider 路径不泄漏 server
 

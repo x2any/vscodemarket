@@ -72,6 +72,7 @@ func VersionLookup(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 	if req.Channel == "stable" {
+		// vscode-server only ships for stable; insider path returns client only.
 		commit, cerr := upstream.CommitHashForVersion(r.Context(), req.Version)
 		if cerr == nil && commit != "" {
 			srv, serr := upstream.FetchServer(r.Context(), commit, req.Version, req.Platform, req.Architecture)

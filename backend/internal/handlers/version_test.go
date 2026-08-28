@@ -57,3 +57,14 @@ func TestWriteErrorEnvelope(t *testing.T) {
 		t.Errorf("body missing code: %s", w.Body.String())
 	}
 }
+
+func TestVersionLookupInsiderOmitsServer(t *testing.T) {
+	// Insider channel must never include a server payload object.
+	body := `{"channel":"insider","version":"1234567","platform":"darwin","architecture":"arm64"}`
+	r := httptest.NewRequest(http.MethodPost, "/api/v1/versions/lookup", strings.NewReader(body))
+	w := httptest.NewRecorder()
+	VersionLookup(w, r)
+	if w.Code == http.StatusOK && strings.Contains(w.Body.String(), `"server":{`) {
+		t.Fatalf("insider must omit server object, got: %s", w.Body.String())
+	}
+}
