@@ -19,6 +19,14 @@ export interface ServerPayload {
 export interface LookupResponse {
   channel: Channel
   version: string
-  client: ClientPayload
-  server?: ServerPayload
+  commit?: string
+  clients: ClientPayload[]
+  servers?: ServerPayload[]
+}
+
+export interface LookupRequest {
+  channel: Channel
+  version: string
+  platform?: Platform
+  architecture?: Architecture
 }

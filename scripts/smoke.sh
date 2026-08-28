@@ -44,4 +44,23 @@ code=$(curl -s -o /dev/null -w "%{http_code}" "$API/trending?targetType=CLIENT&w
 [[ "$code" == "200" ]] || fail "trending: want 200 got $code"
 echo "PASS trending ($code)"
 
+echo "==> versions/lookup matrix (no platform/arch)"
+# Use a known-released stable version; matrix response should carry
+# multiple client entries (windows + linux + darwin rows).
+body=$(curl -s -o /tmp/smoke.matrix -w "%{http_code}" -X POST \
+    -H 'Content-Type: application/json' \
+    "$API/versions/lookup" \
+    -d '{"channel":"stable","version":"1.94.2"}')
+[[ "$body" == "200" || "$body" == "404" ]] || fail "matrix: want 200/404 got $body"
+if [[ "$body" == "200" ]]; then
+    if ! grep -q '"clients":\[' /tmp/smoke.matrix; then
+        fail "matrix response missing clients[]: $(cat /tmp/smoke.matrix)"
+    fi
+    rows=$(grep -o '"platform":"[^"]*"' /tmp/smoke.matrix | wc -l)
+    [[ "$rows" -ge 3 ]] || fail "matrix returned only $rows rows, expected ≥3"
+    echo "PASS matrix ($rows rows)"
+else
+    echo "SKIP matrix (version not on upstream right now)"
+fi
+
 echo "All smoke tests passed."

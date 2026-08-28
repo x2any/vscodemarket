@@ -21,7 +21,8 @@ export const enUS: Dict = {
     clientCard: 'Client download',
     serverCard: 'Server download (vscode-server)',
     commitHash: 'Commit hash',
-    inferHint: 'Auto-detected from your browser. Override anytime.'
+    inferHint: 'Auto-detected from your browser. Override anytime.',
+    matrixHint: 'Leave platform/architecture empty to get the full matrix of download links'
   },
   extension: {
     searchPlaceholder: 'Search extensions (publisher.name or display name fragment)',

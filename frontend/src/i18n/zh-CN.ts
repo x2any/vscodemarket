@@ -19,7 +19,8 @@ export const zhCN = {
     clientCard: '客户端下载',
     serverCard: '服务端下载(vscode-server)',
     commitHash: '对应 commit',
-    inferHint: '已根据浏览器自动选择,可手动覆盖'
+    inferHint: '已根据浏览器自动选择,可手动覆盖',
+    matrixHint: '不选平台/架构时返回全平台 × 全架构的下载链接矩阵'
   },
   extension: {
     searchPlaceholder: '搜索扩展(支持 publisher.name 或显示名片段)',
