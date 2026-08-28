@@ -151,12 +151,12 @@
 
 ### Tests for User Story 6
 
-- [ ] T039 [P] [US6] Contract test for `GET /releases` in `backend/internal/handlers/release_test.go`(组合筛选 + 分页)
+- [x] T039 [P] [US6] Contract test for `GET /releases` in `backend/internal/handlers/release_test.go`(组合筛选 + 分页)
 
 ### Implementation for User Story 6
 
-- [ ] T040 [P] [US6] Implement `GET /releases` handler in `backend/internal/handlers/release.go`(可选 channel/platform/architecture/page/pageSize)
-- [ ] T041 [US6] Create `VersionList.vue` in `frontend/src/pages/VersionList.vue`(三个 select + 分页器)(依赖 T040)
+- [x] T040 [P] [US6] Implement `GET /releases` handler in `backend/internal/handlers/release.go`(可选 channel/platform/architecture/page/pageSize)
+- [x] T041 [US6] Create `VersionList.vue` in `frontend/src/pages/VersionList.vue`(三个 select + 分页器)(依赖 T040)
 
 **Checkpoint**: 浏览模式独立可演示
 
