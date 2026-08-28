@@ -11,10 +11,18 @@ const props = defineProps<{
   commitHash?: string
 }>()
 
+const emit = defineEmits<{
+  (e: 'click', url: string): void
+}>()
+
 const sub = computed(() => {
   const parts = [props.platform, props.architecture].filter(Boolean)
   return parts.join(' / ')
 })
+
+function onActivate() {
+  emit('click', props.url)
+}
 </script>
 
 <template>
@@ -22,7 +30,7 @@ const sub = computed(() => {
     <h3 class="title">{{ title }}</h3>
     <p v-if="sub" class="meta">{{ sub }}</p>
     <p v-if="commitHash" class="commit">{{ t.home.commitHash }}: <code>{{ commitHash }}</code></p>
-    <el-link :href="url" target="_blank" rel="noopener" type="primary">
+    <el-link :href="url" target="_blank" rel="noopener" type="primary" @click="onActivate">
       {{ url }}
     </el-link>
   </el-card>

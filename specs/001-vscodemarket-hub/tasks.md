@@ -190,18 +190,18 @@
 
 ### Tests for User Story 8
 
-- [ ] T048 [P] [US8] Unit test for GeoIP loader UNKNOWN fallback in `backend/internal/geoip/geoip_test.go`(mmdb 缺失路径)
-- [ ] T049 [P] [US8] Unit test for event repo write + retention query in `backend/internal/storage/event_repo_test.go`
-- [ ] T050 [P] [US8] Contract test for `POST /events` failure-degradation in `backend/internal/handlers/event_test.go`(DB 关闭时仍 202)
+- [x] T048 [P] [US8] Unit test for GeoIP loader UNKNOWN fallback in `backend/internal/geoip/geoip_test.go`(mmdb 缺失路径)
+- [x] T049 [P] [US8] Unit test for event repo write + retention query in `backend/internal/storage/event_repo_test.go`
+- [x] T050 [P] [US8] Contract test for `POST /events` failure-degradation in `backend/internal/handlers/event_test.go`(DB 关闭时仍 202)
 
 ### Implementation for User Story 8
 
-- [ ] T051 [US8] Add GORM + SQLite dependencies in `backend/go.mod` & `backend/internal/storage/db.go`(AutoMigrate `BehaviorEvent`)
-- [ ] T052 [P] [US8] Implement GeoIP2 loader in `backend/internal/geoip/geoip.go`(LoadOrNil,Lookup(country) → ISO code 或 UNKNOWN)
-- [ ] T053 [US8] Implement event handler in `backend/internal/handlers/event.go`(异步落库,失败仅日志)
-- [ ] T054 [US8] Wire frontend DownloadLinkCard / VersionForm 提交后 fire-and-forget POST /events(依赖 T019/T022 等)
-- [ ] T055 [US8] Implement sweeper in `backend/internal/sweeper/sweeper.go`(启动 sweep + 24h ticker,DELETE WHERE created_at < now() - 90d)
-- [ ] T056 [US8] Wire sweeper start in `backend/cmd/server/main.go` 启动时(依赖 T055)
+- [x] T051 [US8] Add GORM + SQLite dependencies in `backend/go.mod` & `backend/internal/storage/db.go`(AutoMigrate `BehaviorEvent`)
+- [x] T052 [P] [US8] Implement GeoIP2 loader in `backend/internal/geoip/geoip.go`(LoadOrNil,Lookup(country) → ISO code 或 UNKNOWN)
+- [x] T053 [US8] Implement event handler in `backend/internal/handlers/event.go`(异步落库,失败仅日志)
+- [x] T054 [US8] Wire frontend DownloadLinkCard / VersionForm 提交后 fire-and-forget POST /events(依赖 T019/T022 等)
+- [x] T055 [US8] Implement sweeper in `backend/internal/sweeper/sweeper.go`(启动 sweep + 24h ticker,DELETE WHERE created_at < now() - 90d)
+- [x] T056 [US8] Wire sweeper start in `backend/cmd/server/main.go` 启动时(依赖 T055)
 
 **Checkpoint**: 埋点主路径 + 过期清理独立可演示
 

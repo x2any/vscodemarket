@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { http } from '../api/http'
+import { track } from '../api/track'
 import { t } from '../i18n'
 import VersionForm from '../components/VersionForm.vue'
 import DownloadLinkCard from '../components/DownloadLinkCard.vue'
@@ -31,9 +32,34 @@ async function onSubmit(payload: Parameters<InstanceType<typeof VersionForm>['$e
   result.value = null
   try {
     result.value = await http.post<LookupResponse>('/versions/lookup', payload)
+    if (result.value) {
+      const r = result.value
+      track({
+        eventType: 'SEARCH',
+        targetType: r.server ? 'SERVER' : 'CLIENT',
+        targetIdentifier: r.version,
+        platform: r.client.platform,
+        architecture: r.client.architecture,
+        channel: r.channel
+      })
+    }
   } catch (e) {
     error.value = e instanceof Error ? e.message : String(e)
   }
+}
+
+function onDownloadClick(url: string, kind: 'CLIENT' | 'SERVER') {
+  track({
+    eventType: 'DOWNLOAD',
+    targetType: kind,
+    targetIdentifier: result.value?.version ?? '',
+    platform: result.value?.client.platform,
+    architecture: result.value?.client.architecture,
+    channel: result.value?.channel
+  })
+  // Open the link in a new tab; the browser blocks window.open from async
+  // handlers only in some browsers, so rely on the link itself.
+  void url
 }
 </script>
 
@@ -50,6 +76,7 @@ async function onSubmit(payload: Parameters<InstanceType<typeof VersionForm>['$e
         :url="result.client.downloadUrl"
         :platform="result.client.platform"
         :architecture="result.client.architecture"
+        @click="onDownloadClick(result.client.downloadUrl, 'CLIENT')"
       />
       <DownloadLinkCard
         v-if="result.server"
@@ -58,6 +85,7 @@ async function onSubmit(payload: Parameters<InstanceType<typeof VersionForm>['$e
         :platform="result.server.platform"
         :architecture="result.server.architecture"
         :commit-hash="result.server.commitHash"
+        @click="onDownloadClick(result.server.downloadUrl, 'SERVER')"
       />
     </div>
   </section>
