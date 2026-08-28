@@ -94,12 +94,6 @@ func LatestStable(ctx context.Context, platform, arch string) (string, error) {
 
 // CommitHashForVersion fetches the commit hash associated with a stable build.
 // Microsoft's release.json endpoint exposes the commit field.
-type releaseJSONEntry struct {
-	Version  string `json:"version"`
-	Commit   string `json:"commit"`
-	Platform string `json:"platform"`
-}
-
 func CommitHashForVersion(ctx context.Context, version string) (string, error) {
 	url := "https://update.code.visualstudio.com/api/releases/stable"
 	c := newAPIClient()
