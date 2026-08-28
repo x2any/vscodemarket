@@ -214,13 +214,13 @@
 
 ### Tests for User Story 9
 
-- [ ] T057 [P] [US9] Unit test for trending aggregation SQL in `backend/internal/storage/event_repo_test.go`(三物 × 三窗 Top 10)
+- [x] T057 [P] [US9] Unit test for trending aggregation SQL in `backend/internal/storage/event_repo_test.go`(三物 × 三窗 Top 10)
 
 ### Implementation for User Story 9
 
-- [ ] T058 [US9] Implement `GET /trending` handler in `backend/internal/handlers/trending.go`(targetType + window → Top 10 SQL)
-- [ ] T059 [US9] Create `Trending.vue` in `frontend/src/pages/Trending.vue`(三面板,各面板时间窗切换器)(依赖 T058)
-- [ ] T060 [US9] Wire HomePage / DownloadLinkCard 等嵌入 Trending 区块快捷入口(依赖 T059)
+- [x] T058 [US9] Implement `GET /trending` handler in `backend/internal/handlers/trending.go`(targetType + window → Top 10 SQL)
+- [x] T059 [US9] Create `Trending.vue` in `frontend/src/pages/Trending.vue`(三面板,各面板时间窗切换器)(依赖 T058)
+- [x] T060 [US9] Wire HomePage / DownloadLinkCard 等嵌入 Trending 区块快捷入口(依赖 T059)
 
 **Checkpoint**: 热榜独立可演示,与 US8 共享 event_repo
 

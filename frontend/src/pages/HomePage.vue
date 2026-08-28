@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import { http } from '../api/http'
 import { track } from '../api/track'
 import { t } from '../i18n'
@@ -69,6 +70,10 @@ function onDownloadClick(url: string, kind: 'CLIENT' | 'SERVER') {
     <VersionForm ref="formRef" @submit="onSubmit" @infer="onInfer" />
 
     <p v-if="error" class="err">{{ error }}</p>
+
+    <p v-if="!error && result" class="hint">
+      <RouterLink to="/trending">{{ t.nav.trending }} →</RouterLink>
+    </p>
 
     <div v-if="result" class="results">
       <DownloadLinkCard

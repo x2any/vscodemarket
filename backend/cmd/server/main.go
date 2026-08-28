@@ -51,6 +51,7 @@ func main() {
 		r.Get("/extensions/{pub}/{name}/versions/{ver}", handlers.ExtensionVersion)
 		r.Get("/releases", handlers.Releases)
 		r.Post("/events", handlers.RecordEvent(handlers.DepsFrom(repo, resolver)))
+		r.Get("/trending", handlers.Trending(handlers.TrendingDepsFrom(repo)))
 	})
 
 	addr := ":8081"
