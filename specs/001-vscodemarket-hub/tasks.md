@@ -94,12 +94,12 @@
 
 ### Tests for User Story 3
 
-- [ ] T027 [P] [US3] Unit test for UA inference in `backend/internal/handlers/ua_test.go`(mac/win/linux × 各 arch)
+- [x] T027 [P] [US3] Unit test for UA inference in `backend/internal/handlers/ua_test.go`(mac/win/linux × 各 arch)
 
 ### Implementation for User Story 3
 
-- [ ] T028 [US3] Implement `POST /ua/infer` handler in `backend/internal/handlers/ua.go`(OS+arch 关键字匹配,缺架构默认 x86_64 = FALLBACK)
-- [ ] T029 [US3] Wire `VersionForm.vue` onMounted to call `/ua/infer` with `navigator.userAgent` and prefill selects(依赖 T021)
+- [x] T028 [US3] Implement `POST /ua/infer` handler in `backend/internal/handlers/ua.go`(OS+arch 关键字匹配,缺架构默认 x86_64 = FALLBACK)
+- [x] T029 [US3] Wire `VersionForm.vue` onMounted to call `/ua/infer` with `navigator.userAgent` and prefill selects(依赖 T021)
 
 **Checkpoint**: US1-3 可端到端验证,表单默认值得来
 

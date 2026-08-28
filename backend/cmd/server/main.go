@@ -18,6 +18,7 @@ func main() {
 			_ = json.NewEncoder(w).Encode(map[string]string{"status": "ok"})
 		})
 		r.Post("/versions/lookup", handlers.VersionLookup)
+		r.Post("/ua/infer", handlers.UAInfer)
 	})
 
 	addr := ":8081"
