@@ -19,6 +19,9 @@ func main() {
 		})
 		r.Post("/versions/lookup", handlers.VersionLookup)
 		r.Post("/ua/infer", handlers.UAInfer)
+		r.Get("/extensions/search", handlers.ExtensionSearch)
+		r.Get("/extensions/{pub}/{name}/versions", handlers.ExtensionVersions)
+		r.Get("/extensions/{pub}/{name}/versions/{ver}", handlers.ExtensionVersion)
 	})
 
 	addr := ":8081"

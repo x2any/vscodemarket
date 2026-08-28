@@ -112,15 +112,15 @@
 
 ### Tests for User Story 4
 
-- [ ] T030 [P] [US4] Contract test for `GET /extensions/search` in `backend/internal/handlers/extension_test.go`(httptest mock Marketplace)
-- [ ] T031 [P] [US4] Contract test for `GET /extensions/:pub/:name/versions[/:ver]` in `backend/internal/handlers/extension_test.go`(200/404)
+- [x] T030 [P] [US4] Contract test for `GET /extensions/search` in `backend/internal/handlers/extension_test.go`(httptest mock Marketplace)
+- [x] T031 [P] [US4] Contract test for `GET /extensions/:pub/:name/versions[/:ver]` in `backend/internal/handlers/extension_test.go`(200/404)
 
 ### Implementation for User Story 4
 
-- [ ] T032 [P] [US4] Implement Extension upstream adapter in `backend/internal/upstream/extension.go`(search + versions,透传 Marketplace 排序)
-- [ ] T033 [US4] Implement extension handlers in `backend/internal/handlers/extension.go`(search / versions / version-by-id)(依赖 T032)
-- [ ] T034 [P] [US4] Create `ExtensionSearch.vue` in `frontend/src/pages/ExtensionSearch.vue`(输入 + 结果列表)
-- [ ] T035 [US4] Wire search page 提交 → 后端 → 单匹配直跳 / 多结果列表(依赖 T033/T034)
+- [x] T032 [P] [US4] Implement Extension upstream adapter in `backend/internal/upstream/extension.go`(search + versions,透传 Marketplace 排序)
+- [x] T033 [US4] Implement extension handlers in `backend/internal/handlers/extension.go`(search / versions / version-by-id)(依赖 T032)
+- [x] T034 [P] [US4] Create `ExtensionSearch.vue` in `frontend/src/pages/ExtensionSearch.vue`(输入 + 结果列表)
+- [x] T035 [US4] Wire search page 提交 → 后端 → 单匹配直跳 / 多结果列表(依赖 T033/T034)
 
 **Checkpoint**: 扩展主路径独立可验证
 
