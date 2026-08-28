@@ -252,16 +252,16 @@
 
 ### Tests for User Story 11
 
-- [ ] T065 [P] [US11] Playwright E2E spec for S1(Stable 主路径) in `frontend/tests/e2e/s1.spec.ts`
-- [ ] T066 [P] [US11] Playwright E2E spec for S3(扩展搜索) in `frontend/tests/e2e/s3.spec.ts`
-- [ ] T067 [P] [US11] Playwright E2E spec for S4(扩展直达) in `frontend/tests/e2e/s4.spec.ts`
-- [ ] T068 [P] [US11] Playwright E2E spec for S6(热榜) in `frontend/tests/e2e/s6.spec.ts`
+- [x] T065 [P] [US11] Playwright E2E spec for S1(Stable 主路径) in `frontend/tests/e2e/s1.spec.ts`
+- [x] T066 [P] [US11] Playwright E2E spec for S3(扩展搜索) in `frontend/tests/e2e/s3.spec.ts`
+- [x] T067 [P] [US11] Playwright E2E spec for S4(扩展直达) in `frontend/tests/e2e/s4.spec.ts`
+- [x] T068 [P] [US11] Playwright E2E spec for S6(热榜) in `frontend/tests/e2e/s6.spec.ts`
 
 ### Implementation for User Story 11
 
-- [ ] T069 [P] [US11] Add GDPR / 隐私声明 section to `README.md`:数据字段(countryCode、行为事件)、90 天保留、不收 PII、联系邮箱
-- [ ] T070 [US11] Add CI workflow in `.github/workflows/ci.yml`(backend: `go test ./...`;frontend: `pnpm install && pnpm playwright test`)
-- [ ] T071 [US11] Verify all spec success criteria(SC-001 ~ SC-010)in `docs/qa-checklist.md`(每条引用 quickstart 场景)
+- [x] T069 [P] [US11] Add GDPR / 隐私声明 section to `README.md`:数据字段(countryCode、行为事件)、90 天保留、不收 PII、联系邮箱
+- [x] T070 [US11] Add CI workflow in `.github/workflows/ci.yml`(backend: `go test ./...`;frontend: `pnpm install && pnpm playwright test`)
+- [x] T071 [US11] Verify all spec success criteria(SC-001 ~ SC-010)in `docs/qa-checklist.md`(每条引用 quickstart 场景)
 
 **Checkpoint**: Done 定义全部满足
 
