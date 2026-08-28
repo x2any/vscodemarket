@@ -34,12 +34,12 @@
 
 **⚠️ CRITICAL**: 任一 User Story 启动前必须完成
 
-- [ ] T009 Implement shared API error type with bilingual fields in `backend/internal/handlers/errors.go`(code + message_zh + message_en)
-- [ ] T010 [P] Implement official-domain whitelist assertion in `backend/internal/upstream/whitelist.go`(handler 出网前拦截,SC-007 测试守护)
-- [ ] T011 [P] Setup frontend router in `frontend/src/router/index.ts`(routes 占位 /, /search, /extension/:pub/:name, /extension/:pub/:name/v/:ver, /releases, /trending, /docs)
-- [ ] T012 [P] Initialize i18n dictionaries in `frontend/src/i18n/zh-CN.ts` 与 `frontend/src/i18n/en-US.ts`(key 集合在 M11 测试中要求相等)
-- [ ] T013 [P] Create shared layout with responsive breakpoints in `frontend/src/App.vue`(≥1024 / 768-1023 / <768,SC-003)
-- [ ] T014 Create HTTP client wrapper in `frontend/src/api/http.ts`(baseURL = `/api/v1`,统一错误弹层)
+- [x] T009 Implement shared API error type with bilingual fields in `backend/internal/handlers/errors.go`(code + message_zh + message_en)
+- [x] T010 [P] Implement official-domain whitelist assertion in `backend/internal/upstream/whitelist.go`(handler 出网前拦截,SC-007 测试守护)
+- [x] T011 [P] Setup frontend router in `frontend/src/router/index.ts`(routes 占位 /, /search, /extension/:pub/:name, /extension/:pub/:name/v/:ver, /releases, /trending, /docs)
+- [x] T012 [P] Initialize i18n dictionaries in `frontend/src/i18n/zh-CN.ts` 与 `frontend/src/i18n/en-US.ts`(key 集合在 M11 测试中要求相等)
+- [x] T013 [P] Create shared layout with responsive breakpoints in `frontend/src/App.vue`(≥1024 / 768-1023 / <768,SC-003)
+- [x] T014 Create HTTP client wrapper in `frontend/src/api/http.ts`(baseURL = `/api/v1`,统一错误弹层)
 
 **Checkpoint**: Foundation ready — 可并行启动所有 User Story
 
